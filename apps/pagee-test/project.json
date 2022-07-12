@@ -1,0 +1,83 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/pagee-test/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/pagee-test",
+        "index": "apps/pagee-test/src/index.html",
+        "baseHref": "/",
+        "main": "apps/pagee-test/src/main.tsx",
+        "polyfills": "apps/pagee-test/src/polyfills.ts",
+        "tsConfig": "apps/pagee-test/tsconfig.app.json",
+        "assets": [
+          "apps/pagee-test/src/favicon.ico",
+          "apps/pagee-test/src/assets"
+        ],
+        "styles": ["apps/pagee-test/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/pagee-test/src/environments/environment.ts",
+              "with": "apps/pagee-test/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "pagee-test:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "pagee-test:build:development"
+        },
+        "production": {
+          "buildTarget": "pagee-test:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/pagee-test/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/pagee-test"],
+      "options": {
+        "jestConfig": "apps/pagee-test/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
