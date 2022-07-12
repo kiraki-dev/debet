@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@debet/pageee": ["libs/pagee/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
