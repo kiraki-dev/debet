@@ -1,1 +1,2 @@
-export * from './lib/pagee';
+export * from './lib/pages/pages';
+export * from './lib/page/page';
