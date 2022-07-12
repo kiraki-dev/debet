@@ -2,7 +2,6 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "pagee-test": "apps/pagee-test",
-    "pagee-test-e2e": "apps/pagee-test-e2e"
+    "pagee-test": "apps/pagee-test"
   }
 }
