@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import Pages from './pages';
+import { Pages } from './pages';
 
 describe('Pages', () => {
   it('should render successfully', () => {

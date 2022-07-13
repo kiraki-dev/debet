@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import * as React from 'react';
 
-import usePageManager from './use-page-manager';
+import { usePageManager } from './use-page-manager';
 
 describe('usePageManager', () => {
   it('should render successfully', () => {

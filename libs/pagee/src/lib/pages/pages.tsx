@@ -50,14 +50,14 @@ const usePageManagerContext = (parentName: string) => {
   return pageManager;
 }
 
-const useActivePagePath = () => {
+export const useActivePagePath = () => {
   return usePageManagerContext('useActivePagePath').activePage;
 };
 
-const useActivePageElement = () => {
+export const useActivePageElement = () => {
   return usePageManagerContext('useActivePageElement').pageElement;
 };
 
-const useActivePageData = () => {
+export const useActivePageData = () => {
   return usePageManagerContext('useActivePageData').pageData;
 };
