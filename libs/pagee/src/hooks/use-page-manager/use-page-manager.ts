@@ -1,17 +1,15 @@
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 
 export interface PageDescriptor {
   path: string;
   isIndex: boolean;
-  element: ReactNode;
 }
 
-type WithData<T> = T & { data: unknown };
+type WithData<T> = T & { data?: unknown };
 
 export interface PageManager {
   activePage: string;
-  get pageElement(): ReactNode | null;
-  get pageData(): unknown;
+  pageData: unknown;
 }
 
 export const usePageManager = (pageDescriptors: PageDescriptor[]): PageManager => {
@@ -22,7 +20,7 @@ export const usePageManager = (pageDescriptors: PageDescriptor[]): PageManager =
 
 const createPageManager = (pageDescriptors: PageDescriptor[]): PageManager => {
   const pages = new Map<string, WithData<PageDescriptor>>(
-    pageDescriptors.map((descriptor) => [descriptor.path, { ...descriptor, data: null }])
+    pageDescriptors.map((descriptor) => [descriptor.path, { ...descriptor, data: undefined }])
   );
 
   const indexPage = pageDescriptors.find((descriptor) => descriptor.isIndex) ?? pageDescriptors[0];
@@ -33,13 +31,20 @@ const createPageManager = (pageDescriptors: PageDescriptor[]): PageManager => {
       return activePage;
     },
     set activePage(value: string) {
+      const activePageDescriptor = pages.get(activePage);
+      if (activePage !== value && activePageDescriptor) {
+        activePageDescriptor.data = undefined;
+      }
       activePage = value;
-    },
-    get pageElement() {
-      return pages.get(activePage)?.element;
     },
     get pageData() {
       return pages.get(activePage)?.data;
     },
+    set pageData(value: unknown) {
+      const activePageDescriptor = pages.get(activePage);
+      if (activePageDescriptor) {
+        activePageDescriptor.data = value;
+      }
+    }
   }
 };

@@ -6,6 +6,7 @@ import {
   isValidElement,
   ReactElement,
   useContext,
+  useCallback,
 } from 'react';
 
 import {
@@ -27,7 +28,6 @@ export const Pages: FC<PagesProps> = ({ children }) => {
 
   const pageDescriptors = pageNodes.map(({ props }) => ({
     path: props.path,
-    element: props.element,
     isIndex: props.index,
   }));
 
@@ -54,10 +54,15 @@ export const useActivePagePath = () => {
   return usePageManagerContext('useActivePagePath').activePage;
 };
 
-export const useActivePageElement = () => {
-  return usePageManagerContext('useActivePageElement').pageElement;
-};
-
 export const useActivePageData = () => {
   return usePageManagerContext('useActivePageData').pageData;
+};
+
+export const useSetActivePage = () => {
+  const pageManager = usePageManagerContext('useSetActivePage');
+
+  return useCallback((page: string, data?: unknown) => {
+    pageManager.activePage = page;
+    pageManager.pageData = data;
+  }, [pageManager]);
 };
