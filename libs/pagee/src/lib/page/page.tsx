@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react';
+import { useActivePagePath } from '../pages/pages';
 
 export interface PageProps {
   index?: boolean;
@@ -6,10 +7,13 @@ export interface PageProps {
   element: ReactNode;
 }
 
-export const Page: FC<PageProps> = ({ index = false, path = '', element }) => {
+export const Page: FC<PageProps> = ({ path = '', element }) => {
+  const activePath = useActivePagePath();
+
   return (
-    <div>
-      <h1>Welcome to Page!</h1>
-    </div>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
+      {activePath === path ? element : null}
+    </>
   );
 };
