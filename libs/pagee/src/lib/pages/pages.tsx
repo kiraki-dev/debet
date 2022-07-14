@@ -7,6 +7,8 @@ import {
   ReactElement,
   useContext,
   useCallback,
+  useEffect,
+  useState,
 } from 'react';
 
 import {
@@ -48,14 +50,33 @@ const usePageManagerContext = (parentName: string) => {
   }
 
   return pageManager;
+};
+
+const useListenToPageManagerChanges = (pageManager: PageManager) => {
+  const [, setChangeIndicator] = useState(0);
+
+  useEffect(() => {
+    const listener = () => setChangeIndicator((val) => val + 1);
+    pageManager.addChangeListener(listener);
+
+    return () => pageManager.removeChangeListener(listener);
+  }, [pageManager])
 }
 
 export const useActivePagePath = () => {
-  return usePageManagerContext('useActivePagePath').activePage;
+  const pageManager = usePageManagerContext('useActivePagePath');
+
+  useListenToPageManagerChanges(pageManager);
+
+  return pageManager.activePage;
 };
 
-export const useActivePageData = () => {
-  return usePageManagerContext('useActivePageData').pageData;
+export const useActivePageData = <T extends unknown = unknown>(): T => {
+  const pageManager = usePageManagerContext('useActivePagePath');
+
+  useListenToPageManagerChanges(pageManager);
+
+  return pageManager.pageData as T;
 };
 
 export const useSetActivePage = () => {

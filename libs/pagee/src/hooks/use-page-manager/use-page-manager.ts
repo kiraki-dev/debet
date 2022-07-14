@@ -5,11 +5,15 @@ export interface PageDescriptor {
   isIndex: boolean;
 }
 
+type ChangeListener = () => void;
+
 type WithData<T> = T & { data?: unknown };
 
 export interface PageManager {
   activePage: string;
   pageData: unknown;
+  addChangeListener(listener: ChangeListener): void;
+  removeChangeListener(listener: ChangeListener): void;
 }
 
 export const usePageManager = (pageDescriptors: PageDescriptor[]): PageManager => {
@@ -19,6 +23,7 @@ export const usePageManager = (pageDescriptors: PageDescriptor[]): PageManager =
 }
 
 const createPageManager = (pageDescriptors: PageDescriptor[]): PageManager => {
+  let changeListeners: ChangeListener[] = [];
   const pages = new Map<string, WithData<PageDescriptor>>(
     pageDescriptors.map((descriptor) => [descriptor.path, { ...descriptor, data: undefined }])
   );
@@ -26,7 +31,15 @@ const createPageManager = (pageDescriptors: PageDescriptor[]): PageManager => {
   const indexPage = pageDescriptors.find((descriptor) => descriptor.isIndex) ?? pageDescriptors[0];
   let activePage = indexPage.path;
 
+  const fireChange = () => changeListeners.forEach(listener => listener());
+
   return {
+    addChangeListener: (listener: ChangeListener) => {
+      changeListeners.push(listener);
+    },
+    removeChangeListener(listener: ChangeListener) {
+      changeListeners = changeListeners.filter((cl) => cl !== listener);
+    },
     get activePage() {
       return activePage;
     },
@@ -36,6 +49,7 @@ const createPageManager = (pageDescriptors: PageDescriptor[]): PageManager => {
         activePageDescriptor.data = undefined;
       }
       activePage = value;
+      fireChange();
     },
     get pageData() {
       return pages.get(activePage)?.data;
@@ -45,6 +59,7 @@ const createPageManager = (pageDescriptors: PageDescriptor[]): PageManager => {
       if (activePageDescriptor) {
         activePageDescriptor.data = value;
       }
+      fireChange();
     }
   }
 };
