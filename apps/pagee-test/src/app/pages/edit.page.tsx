@@ -1,5 +1,5 @@
 import React, { FC, FormEvent, useRef } from 'react';
-import { useActivePageData, useSetActivePage } from '@debet/pageee';
+import { useActivePageData, useSetActivePage } from '@debet/pagee';
 
 interface EditPageProps {
   onSubmit: (item: any, oldItem: any) => void;

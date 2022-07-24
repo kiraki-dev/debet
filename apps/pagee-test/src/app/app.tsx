@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Page, Pages } from '@debet/pageee';
+import { Page, Pages } from '@debet/pagee';
 
 import './app.scss';
 import { ListPage } from './pages/list.page';

@@ -1,5 +1,5 @@
 import React, { FC, FormEvent, useRef } from 'react';
-import { useSetActivePage } from '@debet/pageee';
+import { useSetActivePage } from '@debet/pagee';
 
 interface CreatePageProps {
   onSubmit: (item: any) => void;

@@ -9,6 +9,7 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/pagee",
+        "deleteOutputPath": true,
         "tsConfig": "libs/pagee/tsconfig.lib.json",
         "project": "libs/pagee/package.json",
         "entryFile": "libs/pagee/src/index.ts",
