@@ -27,6 +27,12 @@
       "rules": {}
     },
     {
+      "files": ["*.tsx"],
+      "rules": {
+        "@typescript-eslint/no-unnecessary-type-constraint": "off"
+      }
+    },
+    {
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}

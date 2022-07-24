@@ -10,10 +10,11 @@ type ChangeListener = () => void;
 type WithData<T> = T & { data?: unknown };
 
 export interface PageManager {
-  activePage: string;
-  pageData: unknown;
+  readonly activePage: string;
+  readonly pageData: unknown;
   addChangeListener(listener: ChangeListener): void;
   removeChangeListener(listener: ChangeListener): void;
+  setActivePage(page: string, data?: unknown): void;
 }
 
 export const usePageManager = (pageDescriptors: PageDescriptor[]): PageManager => {
@@ -40,26 +41,26 @@ const createPageManager = (pageDescriptors: PageDescriptor[]): PageManager => {
     removeChangeListener(listener: ChangeListener) {
       changeListeners = changeListeners.filter((cl) => cl !== listener);
     },
-    get activePage() {
-      return activePage;
-    },
-    set activePage(value: string) {
-      const activePageDescriptor = pages.get(activePage);
-      if (activePage !== value && activePageDescriptor) {
-        activePageDescriptor.data = undefined;
+    setActivePage(page: string, data?: unknown) {
+      const oldPageDescriptor = pages.get(activePage);
+      if (activePage !== page && oldPageDescriptor) {
+        oldPageDescriptor.data = undefined;
       }
-      activePage = value;
+
+      const pageDescriptor = pages.get(page);
+      if (!pageDescriptor) {
+        throw new Error(`Invalid page "${page}"`);
+      }
+
+      pageDescriptor.data = data;
+      activePage = page;
       fireChange();
+    },
+    get activePage(): string {
+      return activePage;
     },
     get pageData() {
       return pages.get(activePage)?.data;
     },
-    set pageData(value: unknown) {
-      const activePageDescriptor = pages.get(activePage);
-      if (activePageDescriptor) {
-        activePageDescriptor.data = value;
-      }
-      fireChange();
-    }
   }
 };

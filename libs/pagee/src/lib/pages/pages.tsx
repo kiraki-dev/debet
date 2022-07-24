@@ -83,7 +83,6 @@ export const useSetActivePage = () => {
   const pageManager = usePageManagerContext('useSetActivePage');
 
   return useCallback((page: string, data?: unknown) => {
-    pageManager.activePage = page;
-    pageManager.pageData = data;
+    pageManager.setActivePage(page, data);
   }, [pageManager]);
 };
