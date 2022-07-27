@@ -71,12 +71,12 @@ export const useActivePagePath = () => {
   return pageManager.activePage;
 };
 
-export const useActivePageData = <T extends unknown = unknown>(): T => {
+export const useActivePageData = <T extends unknown = unknown>(): T | undefined => {
   const pageManager = usePageManagerContext('useActivePagePath');
 
   useListenToPageManagerChanges(pageManager);
 
-  return pageManager.pageData as T;
+  return pageManager.pageData as T | undefined;
 };
 
 export const useSetActivePage = () => {
