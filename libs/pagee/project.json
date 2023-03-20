@@ -1,11 +1,12 @@
 {
+  "name": "pagee",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/pagee/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/pagee",
@@ -34,7 +35,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/pagee"],
+      "outputs": ["{workspaceRoot}/coverage/libs/pagee"],
       "options": {
         "jestConfig": "libs/pagee/jest.config.ts",
         "passWithNoTests": true

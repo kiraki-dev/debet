@@ -1,10 +1,11 @@
 {
+  "name": "pagee-test",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/pagee-test/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:webpack",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
@@ -21,7 +22,8 @@
         ],
         "styles": ["apps/pagee-test/src/styles.css"],
         "scripts": [],
-        "webpackConfig": "@nrwl/react/plugins/webpack"
+        "webpackConfig": "apps/pagee-test/webpack.config.js",
+        "isolatedConfig": true
       },
       "configurations": {
         "development": {
@@ -47,7 +49,7 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/web:dev-server",
+      "executor": "@nrwl/webpack:dev-server",
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "pagee-test:build",
@@ -73,7 +75,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/pagee-test"],
+      "outputs": ["{workspaceRoot}/coverage/apps/pagee-test"],
       "options": {
         "jestConfig": "apps/pagee-test/jest.config.ts",
         "passWithNoTests": true

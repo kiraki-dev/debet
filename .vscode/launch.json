@@ -7,10 +7,10 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "serve",
+      "name": "serve:test",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "yarn",
-      "runtimeArgs": ["nx", "serve"]
+      "runtimeArgs": ["serve:test"]
     }
   ]
 }
